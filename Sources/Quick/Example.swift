@@ -90,12 +90,14 @@ final public class Example: _ExampleBase {
             #else
             let file = callsite.file
             #endif
-            QuickSpec.current.recordFailure(
-                withDescription: description,
-                inFile: file,
-                atLine: Int(callsite.line),
-                expected: false
-            )
+            if #available(OSXApplicationExtension 10.13, *) {
+                QuickSpec.current.recordFailure(
+                    withDescription: description,
+                    inFile: file,
+                    atLine: Int(callsite.line),
+                    expected: false
+                )
+            }
         }
 
         group!.phase = .aftersExecuting
